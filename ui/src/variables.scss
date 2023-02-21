@@ -1,0 +1,13 @@
+$primary: #025AC7;
+
+$spacer: 2rem;
+
+$spacers: (
+    0: 0,
+    1: $spacer *.25,
+    2: $spacer *.5,
+    3: $spacer *.75,
+    4: $spacer
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
