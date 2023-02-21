@@ -20,9 +20,9 @@ export const App = () => {
                     return {
                         content: text,
                         claim: text,
-                        percentage: Math.floor(Math.random() * 100) + 1 + '%'
+                        percentage: Math.floor(Math.random() * 100) + 1
                     }
-                }))} />
+                }).sort((a, b) => b.percentage - a.percentage))} />
             </Col>
         </Row>
         <hr className="my-4" />

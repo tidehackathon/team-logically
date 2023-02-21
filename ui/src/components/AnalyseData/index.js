@@ -28,7 +28,7 @@ export const AnalyseData = ({ data }) => {
                             <tr key={index}>
                                 <td className="dont-break-out">{item.content}</td>
                                 <td className="dont-break-out">{item.claim}</td>
-                                <td>{item.percentage}</td>
+                                <td>{item.percentage}%</td>
                                 <td><ApproveDismiss handleDismiss={() => setDismissed([ ...dismissed, index ])} /></td>
                             </tr>
                         )
