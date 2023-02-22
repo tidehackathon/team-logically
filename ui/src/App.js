@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Col, Row } from 'reactstrap';
 import { AnalyseData } from './components/AnalyseData';
 import { AnalyseText } from './components/AnalyseText';
+import { DateHistogram } from './components/DateHistogram';
 import { FileUpload } from './components/FileUpload';
 import { SingularInput } from './components/SingularInput';
 import './variables.scss';
@@ -28,5 +29,7 @@ export const App = () => {
         <hr className="my-4" />
         {textInput && <AnalyseText text={textInput} handleDismiss={() => setTextInput('')} />}
         {fileInput.length !== 0 && <AnalyseData data={fileInput} />}
+        <hr className="my-4" />
+        <DateHistogram />
     </div>
 };

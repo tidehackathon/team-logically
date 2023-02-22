@@ -7,7 +7,7 @@ const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 (async () => {
     const result = await new Promise((resolve) => {
-        exec('wc -l ../../data/Ukraine_border.csv', (error, results) => {
+        exec('wc -l ../../data/StandWithUkraine1.csv', (error, results) => {
             resolve(results);
         });
     })
@@ -18,7 +18,7 @@ const rows = [];
 
 const parseStream = papa.parse(papa.NODE_STREAM_INPUT, { header: true });
 
-fs.createReadStream("../../data/Ukraine_border.csv", { encoding: "utf-8" })
+fs.createReadStream("../../data/StandWithUkraine1.csv", { encoding: "utf-8" })
     .pipe(parseStream)
     .on("data", (row) => {
         rows.push(row)
@@ -26,16 +26,18 @@ fs.createReadStream("../../data/Ukraine_border.csv", { encoding: "utf-8" })
     })
     .on("end", () => {
         bar.stop();
-        console.log(rows.length);
+        console.log(rows.length, rows[1]);
+        console.log('done');
+        // exportJSON('Ukraine_border_dates.json', rows.slice(1))
     })
     .on("error", (error) => {
         bar.stop();
         console.log(error.message);
     });
 
-const exportJSONL = (fileName, arr) => {
+const exportJSON = (fileName, arr) => {
     const writeStream = fs.createWriteStream(fileName)
-    arr.map(x => writeStream.write(`${JSON.stringify(x)}\n`))
+    writeStream.write(JSON.stringify(arr))
     writeStream.end()
     console.log(`exported ${fileName}`);
 }
