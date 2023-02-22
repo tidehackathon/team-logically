@@ -14,7 +14,7 @@ export const AnalyseData = ({ data }) => {
                     <td className="px-0"><strong>{data.length}</strong></td>
                     <td></td>
                     <td className="px-0">Analysed against:</td>
-                    <td className="px-0"><strong>1000000 articles</strong></td>
+                    <td className="px-0"><strong>6393253 articles</strong></td>
                 </tr>
                 <tr>
                     <td className="px-0">Claims found:</td>

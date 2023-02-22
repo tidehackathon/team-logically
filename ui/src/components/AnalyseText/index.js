@@ -9,8 +9,8 @@ export const AnalyseText = ({ handleDismiss }) => {
             <span className="ms-3">Analysed against: <strong>1000 articles</strong></span>
         </p>
         <h4>100% likelihood of disinformation</h4>
-        <Highlighter searchWords={['nightmares']}
-            textToHighlight={'drinking milk before bed gives you nightmares'}
+        <Highlighter searchWords={['hoax']}
+            textToHighlight={'the war in ukraine is a hoax'}
             highlightClassName="p-0"
         />
         <div className="mt-2">
