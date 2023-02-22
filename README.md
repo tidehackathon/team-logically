@@ -1,7 +1,10 @@
 # team-logically
 
+## Iteration 1
+![](https://github.com/tidehackathon/team-logically/blob/main/iteration-1-21-02-23.gif)
 
-![](https://github.com/tidehackathon/team-logically/blob/main/ui-gif.gif)
+## Iteration 2
+![](https://github.com/tidehackathon/team-logically/blob/main/iteration-2-22-02-23.gif)
 
 ## UI
 
