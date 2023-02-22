@@ -16,3 +16,18 @@ Downloads and installs dependencies
 #### `npm start` or `yarn start`
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+What tools did we use? 
+open source?
+- Highcharts (UI visualizations)
+
+Non-proprietary 
+- 
+
+Code? Languages etc
+- ReactJS (UI)
+
+Tools?
+-
+
