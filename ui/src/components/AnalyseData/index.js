@@ -8,10 +8,10 @@ export const AnalyseData = ({ data }) => {
     const [dismissed, setDismissed] = useState([]);
     return <div>
         <p>
-            Analysed content counter: {data.length}
-            <span className="ms-3">Analysed against: 1000000 articles</span>
+            Analysed content counter: <strong>{data.length}</strong>
+            <span className="ms-3">Analysed against: <strong>1000000 articles</strong></span>
         </p>
-        <p>Claims found: {data.length}</p>
+        <p>Claims found: <strong>{data.length}</strong></p>
         <div className="overflow-auto mt-2" style={{ maxHeight: 450 }}>
             <Table>
                 <thead className="sticky-top bg-white">
@@ -31,7 +31,7 @@ export const AnalyseData = ({ data }) => {
                                 <td className="dont-break-out">{item.claim}</td>
                                 <td>
                                     <div className="d-flex">
-                                        <p className="mb-0 me-2">{item.percentage}%</p>
+                                        <p className="mb-0 me-2"><strong>{item.percentage}%</strong></p>
                                         <Speedometer value={item.percentage} />
                                     </div>
                                 </td>
@@ -47,5 +47,6 @@ export const AnalyseData = ({ data }) => {
                 </tbody>
             </Table>
         </div>
+        <hr className="my-4" />
     </div>
 };

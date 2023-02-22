@@ -33,7 +33,6 @@ export const App = () => {
         {textInput && <AnalyseText text={textInput} handleDismiss={() => setTextInput('')} />}
         {fileInput.length !== 0 && <AnalyseData data={fileInput} />}
         {(!textInput && !fileInput.length) && <EmptyScreen />}
-        <hr className="my-4" />
         <Button onClick={() => setDataset(!dataset)}>{dataset ? 'Hide' : 'Show'} dataset</Button>
         {dataset && <DateHistogram />}
     </div>

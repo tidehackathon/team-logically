@@ -5,8 +5,8 @@ import { ApproveDismiss } from '../ApproveDismiss';
 export const AnalyseText = ({ handleDismiss }) => {
     return <div>
         <p>
-            Analysed content counter: 1
-            <span className="ms-3">Analysed against: 1000 articles</span>
+            Analysed content counter: <strong>1</strong>
+            <span className="ms-3">Analysed against: <strong>1000 articles</strong></span>
         </p>
         <h4>100% likelihood of disinformation</h4>
         <Highlighter searchWords={['nightmares']}
