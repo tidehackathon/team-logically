@@ -1,7 +1,7 @@
 # team-logically
 
 
-![](https://github.com/tidehackathon/team-logically/ui-gif.gif)
+![](https://github.com/tidehackathon/team-logically/blob/main/ui-gif.gif)
 
 ## UI
 
