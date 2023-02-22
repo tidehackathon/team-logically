@@ -7,7 +7,7 @@
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-2-22-02-23.gif)
 
 ## Architecture V1 - 22/02/2023
-![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.png)
+![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
 
 ## UI
 
