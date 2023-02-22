@@ -17,7 +17,7 @@ export const AnalyseData = ({ data }) => {
                     <tr>
                         <td>Content</td>
                         <td>Claim</td>
-                        <td style={{ width: 150 }}>Misinfo likelihood</td>
+                        <td style={{ width: 150 }}>Disinfo likelihood</td>
                         <td style={{ width: 200 }}>Action</td>
                     </tr>
                 </thead>

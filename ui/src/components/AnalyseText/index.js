@@ -8,7 +8,7 @@ export const AnalyseText = ({ handleDismiss }) => {
             Analysed content counter: 1
             <span className="ms-3">Analysed against: 1000 articles</span>
         </p>
-        <h4>100% likelihood of misinformation</h4>
+        <h4>100% likelihood of disinformation</h4>
         <Highlighter searchWords={['nightmares']}
             textToHighlight={'drinking milk before bed gives you nightmares'}
             highlightClassName="p-0"
