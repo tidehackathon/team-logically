@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Table } from 'reactstrap';
 import { ApproveDismiss } from '../ApproveDismiss';
+import { Speedometer } from '../Speedometer';
 
 export const AnalyseData = ({ data }) => {
     const [limit, setLimit] = useState(100);
@@ -28,7 +29,12 @@ export const AnalyseData = ({ data }) => {
                             <tr key={index}>
                                 <td className="dont-break-out">{item.content}</td>
                                 <td className="dont-break-out">{item.claim}</td>
-                                <td>{item.percentage}%</td>
+                                <td>
+                                    <div className="d-flex">
+                                        <p className="mb-0 me-2">{item.percentage}%</p>
+                                        <Speedometer value={item.percentage} />
+                                    </div>
+                                </td>
                                 <td><ApproveDismiss handleDismiss={() => setDismissed([ ...dismissed, index ])} /></td>
                             </tr>
                         )
