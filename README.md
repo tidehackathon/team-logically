@@ -1,6 +1,8 @@
 # team-logically
 
 
+![](https://github.com/tidehackathon/team-logically/ui-gif.gif)
+
 ## UI
 
 #### `cd ui`
