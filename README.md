@@ -1,9 +1,9 @@
 # team-logically
 
-## Iteration 1
+## Iteration 1 - 21/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-1-21-02-23.gif)
 
-## Iteration 2
+## Iteration 2 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-2-22-02-23.gif)
 
 ## UI
