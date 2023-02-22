@@ -16,7 +16,7 @@ export const Speedometer = ({ value = 50 }) => {
             plotBackgroundImage: null,
             plotBorderWidth: 0,
             plotShadow: false,
-            // height: '80%'
+            backgroundColor: 'transparent'
         },
         title: {
             text: ''
@@ -87,8 +87,10 @@ export const Speedometer = ({ value = 50 }) => {
             enabled: false
         }
     }
-    return <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-    />
+    return <div style={{ height: 25 }}>
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+        />
+    </div>
 };

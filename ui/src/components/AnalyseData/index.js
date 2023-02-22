@@ -7,14 +7,33 @@ export const AnalyseData = ({ data }) => {
     const [limit, setLimit] = useState(100);
     const [dismissed, setDismissed] = useState([]);
     return <div>
-        <p>
-            Analysed content counter: <strong>{data.length}</strong>
-            <span className="ms-3">Analysed against: <strong>1000000 articles</strong></span>
-        </p>
-        <p>Claims found: <strong>{data.length}</strong></p>
+        <Table borderless style={{maxWidth: 800}}>
+            <tbody>
+                <tr>
+                    <td className="px-0">Analysed content counter:</td>
+                    <td className="px-0"><strong>{data.length}</strong></td>
+                    <td></td>
+                    <td className="px-0">Analysed against:</td>
+                    <td className="px-0"><strong>1000000 articles</strong></td>
+                </tr>
+                <tr>
+                    <td className="px-0">Claims found:</td>
+                    <td className="px-0">{data.length}</td>
+                </tr>
+                <tr>
+                    <td className="px-0">Likely disinformation:</td>
+                    <td className="px-0">{data.filter(item => item.percentage > 40).length}</td>
+                </tr>
+                <tr>
+                    <td className="px-0">Unlikely disinformation:</td>
+                    <td className="px-0">{data.filter(item => item.percentage < 40).length}</td>
+                </tr>
+            </tbody>
+        </Table>
+
         <div className="overflow-auto mt-2" style={{ maxHeight: 450 }}>
-            <Table>
-                <thead className="sticky-top bg-white">
+            <Table className="border">
+                <thead className="sticky-top bg-white border-top">
                     <tr>
                         <td>Content</td>
                         <td>Claim</td>
