@@ -6,7 +6,7 @@ export const FileUpload = ({ onChange }) => {
     const { CSVReader } = useCSVReader();
     const [data, setData] = useState([]);
 
-    return <div>
+    return <div className="position-relative">
         <Label>File upload</Label>
         <CSVReader onUploadAccepted={(results) => setData(results.data)}
             config={{
@@ -22,7 +22,7 @@ export const FileUpload = ({ onChange }) => {
                 ProgressBar
             }) => (
                 <>
-                    <div className="d-flex mb-1">
+                    <div className="d-flex">
                         <Button {...getRootProps()} color="primary" className="me-2">
                             File upload
                         </Button>
@@ -31,7 +31,7 @@ export const FileUpload = ({ onChange }) => {
                         </div>}
                         <Button color="primary" disabled={!data.length} onClick={() => onChange(data)}>Analyse</Button>
                     </div>
-                    <ProgressBar className="bg-danger" />
+                    <ProgressBar className="bg-danger position-absolute" style={{ bottom: -16 }} />
                 </>
             )}
         </CSVReader>

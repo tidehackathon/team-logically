@@ -37,7 +37,7 @@ export const DateHistogram = () => {
             }
         ]
     }
-    return <div className="position-rleative mt-2">
+    return <div className="position-relative mt-2">
         {loading && <div className="absolute-center"><Spinner color="primary" /></div>}
         <HighchartsReact
             highcharts={Highcharts}
