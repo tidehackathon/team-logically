@@ -2,11 +2,11 @@ import React from 'react'
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import moment from 'moment';
-import articles from './article_dates.json';
-import reddit from './reddit_dates.json';
-import tweets from './tweet_dates.json';
+import { useData } from './useData';
+import { Spinner } from 'reactstrap';
 
 export const DateHistogram = () => {
+    const { articles, reddit, tweets, loading } = useData()
     const options = {
         chart: {
             zoomType: 'x'
@@ -37,8 +37,8 @@ export const DateHistogram = () => {
             }
         ]
     }
-    return <div>
-        <h2>Sample data</h2>
+    return <div className="position-rleative mt-2">
+        {loading && <div className="absolute-center"><Spinner color="primary" /></div>}
         <HighchartsReact
             highcharts={Highcharts}
             options={options}

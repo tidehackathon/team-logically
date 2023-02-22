@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { AnalyseData } from './components/AnalyseData';
 import { AnalyseText } from './components/AnalyseText';
 import { DateHistogram } from './components/DateHistogram';
@@ -8,6 +8,7 @@ import { SingularInput } from './components/SingularInput';
 import './variables.scss';
 
 export const App = () => {
+    const [dataset, setDataset] = useState(false);
     const [textInput, setTextInput] = useState('');
     const [fileInput, setFileInput] = useState([]);
     return <div className="px-4 pt-4">
@@ -30,6 +31,7 @@ export const App = () => {
         {textInput && <AnalyseText text={textInput} handleDismiss={() => setTextInput('')} />}
         {fileInput.length !== 0 && <AnalyseData data={fileInput} />}
         <hr className="my-4" />
-        <DateHistogram />
+        <Button onClick={() => setDataset(!dataset)}>{dataset ? 'Hide' : 'Show'} dataset</Button>
+        {dataset && <DateHistogram />}
     </div>
 };
