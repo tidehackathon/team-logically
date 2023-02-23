@@ -42,7 +42,7 @@ async def solution(data:dict):
     print("apply evidence retrival")
     filename_er = os.path.join(OUTPUT_PATH, base )+ "_er_processed.csv"
     er_mid = generated_matched_dataset(ground_truth_path="groundtruth_concat.csv", 
-                                        tweets_path="tweets_with_articles.csv",
+                                        tweets_path=match_path.csv,
                                         tweets_data=df_tweets_processed)
     er_mid.to_csv(filename_er)
 
@@ -54,6 +54,44 @@ async def solution(data:dict):
     result = get_entailment(filename_evidence)
 
     print(result)
+    return {"output":""}
+
+
+@app.post("/get_claims")
+async def solution(data:dict):
+    print(data)
+    filename = os.path.join(INPUT_PATH, 'input_data.csv')
+    base = 'input_data'
+
+    cols = ["content"]
+    input_df = pd.DataFrame(data['content'], columns=cols)
+    input_df.to_csv(filename, index=False)
+
+    print("processing and extracting keyword from tweet")
+    df_tweets_processed, df_tweets_extractions = generate_preprocess_dataset(filename, OUTPUT_PATH) # base + "_extractions.csv"
+    filename_extraction = os.path.join(OUTPUT_PATH, os.path.basename(filename.replace(".csv", "_extractions.csv")))
+    # get article compatible by keyword with tweets 
+    print("match article - tweet by keyword & elastic search")
+    match_path = os.path.join(OUTPUT_PATH, base + "_tweets_with_articles.csv")
+    df_tweets_with_articles = get_tweets_with_articles(filename_extraction, match_path) # pd.read_csv("tweets_with_articles.csv") #
+
+    # apply evidence retrieval
+    print("apply evidence retrival")
+    filename_er = os.path.join(OUTPUT_PATH, base )+ "_er_processed.csv"
+    er_mid = generated_matched_dataset(ground_truth_path="groundtruth_concat.csv", 
+                                        tweets_path=match_path.csv,
+                                        tweets_data=df_tweets_processed)
+    er_mid.to_csv(filename_er)
+
+    evidence_filtered_df, filename_evidence = generate_evidence_filtered_hackaton_dataset(filename_er, "sentence", 3, False)
+
+    # apply entailment
+    print("apply entailment")
+
+    result = get_entailment(filename_evidence)
+
+    print(result)
+
     return {"output":""}
 
 if __name__ == '__main__':
