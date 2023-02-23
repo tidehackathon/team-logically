@@ -20,13 +20,17 @@ export const App = () => {
             <Col xs={12} lg={6} xl={4}>
                 <SingularInput onChange={setTextInput} />
             </Col>
-            <Col xs={12} lg={6} xl="auto">
+            <Col xs={12} lg="auto">
                 <FileUpload onChange={(data) => setFileInput(data.map((item) => {
                     const text = item.headlines || (item.title === 'Comment' ? item.body : item.title) || item.content || '';
                     return {
+                        date: new Date(item.date || item.published || item.timestamp),
                         content: text,
                         claim: text,
-                        percentage: Math.floor(Math.random() * 100) + 1
+                        percentage: Math.floor(Math.random() * 100) + 1,
+                        ...(item.likeCount !== undefined ? {
+                            engagement: parseInt(item.likeCount) + parseInt(item.replyCount || 0) + parseInt(item.retweetCount || 0)
+                        } : {})
                     }
                 }).sort((a, b) => b.percentage - a.percentage))} />
             </Col>

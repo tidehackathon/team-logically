@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import { ClaimsTable } from './ClaimsTable';
+import { Engagement } from './Engagement';
 import { KeywordWordcloud } from './KeywordWordcloud';
 
 export const AnalyseData = ({ data }) => {
@@ -31,8 +32,11 @@ export const AnalyseData = ({ data }) => {
 
         <ClaimsTable data={data} />
         <div className="mt-4">
-            <KeywordWordcloud data={data} />
+            <KeywordWordcloud data={data.slice(0, 500)} />
         </div>
+        {data[0]?.engagement !== undefined && <div className="mt-4">
+            <Engagement data={data} />
+        </div>}
         <hr className="my-4" />
     </div>
 };
