@@ -1,16 +1,3 @@
-import numpy as np
-import pandas as pd
-import spacy
-import pickle
-import torch
-from sentence_transformers import SentenceTransformer, util
-
-nlp = spacy.load('en_core_web_sm', disable = ['ner', 'parser', 'tagger','lemmatizer','attribute_ruler' ])
-nlp.max_length = 1500000
-nlp.add_pipe(nlp.create_pipe('sentencizer'))
-
-model = SentenceTransformer('all-MiniLM-L6-v2')
-
 """Explore to use SBERT (1st stage text ranker) evidence retriever
 
 split doc text into paragraphs / sentences -> Obtain top K paragraph / sentences that semantically similar to claim text -> output doc text prefiltered and sorted dataset
@@ -20,6 +7,13 @@ split doc text into paragraphs / sentences -> Obtain top K paragraph / sentences
 
 output is consistent with original dataset structure to be used for subsequent embedding and model training
 """
+
+import numpy as np
+import pandas as pd
+import spacy
+import pickle
+import torch
+from sentence_transformers import SentenceTransformer, util
 from typing import List
 import os
 import logging
@@ -28,22 +22,12 @@ nltk.download("punkt")
 import torch
 import pandas as pd
 from tqdm import tqdm
-# from text_utils import simple_text_norm
-from sentence_transformers import SentenceTransformer, util
 
-# logger = logging.getLogger(__name__)
-# logging.basicConfig(level=logging.INFO,
-#                     filename=os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-#                                           "evidence_retrieval_with_sbert.log"),
-#                     format='%(asctime)s [%(threadName)-12.12s] - %(name)s - %(levelname)s - %(message)s',
-#                     datefmt='%Y-%m-%d %H:%M:%S')
-# # set up logging to console
-# console = logging.StreamHandler()
-# console.setLevel(logging.INFO)
-# # set a format which is simpler for console use
-# formatter = logging.Formatter('%(asctime)s : %(levelname)s : %(message)s')
-# console.setFormatter(formatter)
-# logging.getLogger(__name__).addHandler(console)
+# nlp = spacy.load('en_core_web_sm', disable = ['ner', 'parser', 'tagger','lemmatizer','attribute_ruler' ])
+# nlp.max_length = 1500000
+# nlp.add_pipe(nlp.create_pipe('sentencizer'))
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -54,14 +38,14 @@ sbert_model = SentenceTransformer(sbert_model_name)  # dim: 768
 SIMPLIFIED_MODEL_NAME = "sbertqa"
 sbert_model.to(device)
 sbert_model.eval()
-# logger.info("%s model loaded", sbert_model_name)
 
-def generated_matched_dataset(ground_truth_path, tweets_path):
+def generated_matched_dataset(ground_truth_path, tweets_path, tweets_data):
     data_compare = pd.read_csv(ground_truth_path, encoding='utf-8')
     tweets = pd.read_csv(tweets_path, encoding='utf-8')
     er_mid = []
     er_mid = pd.DataFrame(er_mid)
-    er_mid['keywords'] = tweets['keywords']
+    #er_mid['keywords'] = tweets['keywords']
+    er_mid["claim"] = tweets.id.apply(lambda x: tweets_data.iloc[x].content_process)
     articls = []
     headlins = []
     for i in range(len(tweets)):
@@ -77,7 +61,8 @@ def generated_matched_dataset(ground_truth_path, tweets_path):
         articls.append(articletext)
     er_mid['headlines'] = headlins
     er_mid['content'] = articls
-    er_mid.to_csv("er_processed.csv")
+    
+    return er_mid 
 
 def get_top_k_paragraph(claim_text: str, doc_text: str, k=5) -> List[str]:
     if type(doc_text) == float:
@@ -130,7 +115,7 @@ def get_top_k(claim_text: str, evidence_text_list: List[str], k=5) -> List[str]:
     return top_k_evidences
 
 
-def generate_evidence_filtered_factify2_dataset(dataset_path, split_type, top_k, enable_filtering):
+def generate_evidence_filtered_hackaton_dataset(dataset_path, split_type, top_k, enable_filtering):
     """
     give a factify2 dataset, we generate evidence filtered dataset with vary length (i.e., top K)
     :param dataset_path: train.csv, val.csv, test.csv
@@ -147,9 +132,9 @@ def generate_evidence_filtered_factify2_dataset(dataset_path, split_type, top_k,
     # logger.info("processing factify2 evidence re-ranked dataset with 'split_type': [%s], "
     #             "'TOP_K': [%s], 'enable_invalid_sample_filtering': [%s]", split_type, top_k,
     #             enable_filtering)
-    for row in data_df.iterrows():
+    for row in tqdm(data_df.iterrows(), total=len(data_df)):
         id = int(row[0])
-        claim_text = row[1]["keywords"]
+        claim_text = row[1]["claim"] #["keywords"]
         doc_text = row[1]["content"]
         top_evidences = []
 
@@ -162,52 +147,17 @@ def generate_evidence_filtered_factify2_dataset(dataset_path, split_type, top_k,
         refined_doc_text = " . ".join(top_evidences)
 
         # make changes to content
-        evidence_filtered_df["keywords"][evidence_filtered_df.index == id] = claim_text
+        evidence_filtered_df["claim"][evidence_filtered_df.index == id] = claim_text
         evidence_filtered_df["content"][evidence_filtered_df.index == id] = refined_doc_text
     evidence_filtered_df.to_csv(dataset_path.replace(".csv", "_{}_{}_top_{}.csv".format(SIMPLIFIED_MODEL_NAME,
                                                                                         split_type, top_k)),
                                 encoding="utf-8", sep="\t")
-    # logger.info("all [%s] records exported.", evidence_filtered_df.size)
-    # logger.info("total [%s] samples dropped.", dropped_samples)
+    return evidence_filtered_df, dataset_path.replace(".csv", "_{}_{}_top_{}.csv".format(SIMPLIFIED_MODEL_NAME,
+                                                                                        split_type, top_k))
 
 
-# if __name__ == '__main__':
-#     # manually change 'split_type' and "TOP_K" to generate vary experiment settings
-#     # options for top sentences: 5, 10, 15, 20, 25
-#     # options for top paragraphs: 5
-#     # data_set_path = "/home/jerry/data/factify2/factify2/val.csv"
-#     # data_set_path = "C:\\data\\factchecking\\de-factify\\factify2\\val.csv"
-#     # TOP_K = 10
-#     # split_type = "sentence"  # option: "paragraph" | "sentence"
-#     # only enable data filtering for train and val. DO NOT apply to test test!
-#     # enable_invalid_sample_filtering = True
-
-#     # configure all experiments as follows
-#     evidence_filtering_settings = [("/home/jerry/data/factify2/factify2/train.csv", "paragraph", 5, True),
-#                                    ("/home/jerry/data/factify2/factify2/val.csv", "paragraph", 5, True),
-#                                    ("/home/jerry/data/factify2/factify2test/test.csv", "paragraph", 5, False),
-
-#                                    ("/home/jerry/data/factify2/factify2/train.csv", "sentence", 5, True),
-#                                    ("/home/jerry/data/factify2/factify2/val.csv", "sentence", 5, True),
-#                                    ("/home/jerry/data/factify2/factify2test/test.csv", "sentence", 5, False),
-
-#                                    ("/home/jerry/data/factify2/factify2/train.csv", "sentence", 10, True),
-#                                    ("/home/jerry/data/factify2/factify2/val.csv", "sentence", 10, True),
-#                                    ("/home/jerry/data/factify2/factify2test/test.csv", "sentence", 10, False),
-
-#                                    ("/home/jerry/data/factify2/factify2/train.csv", "sentence", 15, True),
-#                                    ("/home/jerry/data/factify2/factify2/val.csv", "sentence", 15, True),
-#                                    ("/home/jerry/data/factify2/factify2test/test.csv", "sentence", 15, False),
-
-#                                    ("/home/jerry/data/factify2/factify2/train.csv", "sentence", 25, True),
-#                                    ("/home/jerry/data/factify2/factify2/val.csv", "sentence", 25, True),
-#                                    ("/home/jerry/data/factify2/factify2test/test.csv", "sentence", 25, False)
-#                                    ]
-#     for exp_i_data_path, exp_i_split_type, exp_i_top_k, exp_i_enable_filtering in tqdm(evidence_filtering_settings):
-#         generate_evidence_filtered_factify2_dataset(exp_i_data_path, exp_i_split_type, exp_i_top_k,
-#                                                     exp_i_enable_filtering)
-
-
-
-
-generate_evidence_filtered_factify2_dataset("er_processed.csv", "sentence", 5, False)
+if __name__ == "__main__":
+    er_mid = generated_matched_dataset(ground_truth_path="groundtruth_concat.csv", tweets_path="tweets_with_articles.csv",
+                                        tweets_data = pd.read_csv("outputs/StandWithUkraine1_processed.csv"))
+    er_mid.to_csv("outputs/er_processed.csv")
+    generate_evidence_filtered_hackaton_dataset("outputs/er_processed.csv", "sentence", 5, False)
