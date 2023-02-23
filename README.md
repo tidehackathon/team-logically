@@ -88,6 +88,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Enhance sentiment analysis
 - Make it multi modal
 - Multi lingual analysis
+- Integrate more fact checking models
 
 ## API Reference
 
