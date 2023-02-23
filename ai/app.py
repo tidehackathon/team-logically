@@ -1,6 +1,7 @@
 import os
 import requests
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import sys
 from google.cloud import storage
 import string
@@ -12,6 +13,16 @@ from elastic_searc import get_tweets_with_articles
 from evidence_retrival import generated_matched_dataset, generate_evidence_filtered_hackaton_dataset
 from misinfo_entailment import get_entailment
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 print("environement", os.environ)
 INPUT_PATH = "inputs"
