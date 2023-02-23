@@ -1,8 +1,22 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
+import { Spinner } from 'reactstrap';
+import { ClaimsTable } from '../AnalyseData/ClaimsTable';
 import { ApproveDismiss } from '../ApproveDismiss';
+import { useAPI } from './useAPI';
 
 export const AnalyseText = ({ text }) => {
+    const { data, loading } = useAPI(text);
+    if (loading) {
+        return <div className="p-5 d-flex align-items-center justify-content-center">
+            <Spinner color="primary" />
+        </div>
+    }
+    if (data.length) {
+        return <div>
+            <ClaimsTable data={data} />
+        </div>
+    }
     return <div>
         <p>
             Analysed content counter: <strong>1</strong>
