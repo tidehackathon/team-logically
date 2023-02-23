@@ -42,7 +42,7 @@ async def solution(data:dict):
     print("apply evidence retrival")
     filename_er = os.path.join(OUTPUT_PATH, base )+ "_er_processed.csv"
     er_mid = generated_matched_dataset(ground_truth_path="groundtruth_concat.csv", 
-                                        tweets_path=match_path.csv,
+                                        tweets_path=match_path,
                                         tweets_data=df_tweets_processed)
     er_mid.to_csv(filename_er)
 
@@ -79,7 +79,7 @@ async def solution(data:dict):
     print("apply evidence retrival")
     filename_er = os.path.join(OUTPUT_PATH, base )+ "_er_processed.csv"
     er_mid = generated_matched_dataset(ground_truth_path="groundtruth_concat.csv", 
-                                        tweets_path=match_path.csv,
+                                        tweets_path=match_path,
                                         tweets_data=df_tweets_processed)
     er_mid.to_csv(filename_er)
 
