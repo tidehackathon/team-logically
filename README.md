@@ -32,7 +32,15 @@ Additionally the user can see a second page of already reviewed claims and the o
 
 
 ## Overview of the product:
-Using 
+We take as input social media content and are able to cross reference it with a knowledge base, to be able to determine its likelyhood of disinoframtion.
+
+The knowledge base was built 407 Ground truth articles. These articles span a timeframe of publishing which is relatively small in relation to the publishing of the social media posts. 
+
+This, however, we show is not a problem necesserily ass in these use cases 'narratives' are repeated. Hence even a small time frame encompasses a lot of the knoweldge.
+
+The limitation would be for posts published after, which would encompass a new development. However we appreciaate this would be easily resolved with additional data.
+
+What has enabled us to provide such a robust solution is our use of a 'topic agnostic model', which doesnt need additional training on the use case/topic to be affective. Which has already demonstrated its accuracy in the field of mis/dis detection, see for example SNOPES. 
 
 
 
@@ -44,20 +52,35 @@ Using
 
 ## Iteration 2 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-2-22-02-23.gif)
-
-## Iteration 3 - 23/02/2023
-![](https://github.com/tidehackathon/team-logically/blob/main/iteration-3-23-02-23.gif)
 # Architecture
 ## Architecture V1 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
-​
+## Installation
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Available Scripts
+#### `npm i` or `yarn`
+Downloads and installs dependencies
+
+#### `npm start` or `yarn start`
+Runs the app in the development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
 ## Roadmap
 
-- needs input from Amran/David
 - Additional browser support
 
 - Add more integrations
 
+- Increase the dataset
+- Adding more negative labels
+- Include active learning approach - 'expert in the loop' to teach the mnodel
+- Train models the specific use cases using specific annotated data
+- implement additional signals based on tweet meta data - which has not been included in this iteration
+- Enhance sentiment analysis
+- Make it multi modal
+- Multi lingual analysis
 
 ## API Reference
 
@@ -93,13 +116,13 @@ Takes two numbers and returns the sum.
 Clone the project
 
 ```bash
-  git clone https://github.com/tidehackathon/team-logically.git
+  git clone https://link-to-project
 ```
 
 Go to the project directory
 
 ```bash
-  cd team-logically/ui
+  cd my-project
 ```
 
 Install dependencies
@@ -139,6 +162,31 @@ keyword-extractor - a quick module that extracts keywords
 ### DS models: 
 Non-proprietary 
 
+SBERT: https://sbert.net/
+
+XLNET Large: https://huggingface.co/docs/transformers/model_doc/xlnet
+
+RAKE Keyword extraction algorithm
+- used for pre processing
+https://pypi.org/project/rake-nltk/
+
+Elastic Search
+- Building an index of the ground truth articles
+
+https://www.elastic.co/
+
+- username: elastic
+- password: xjzoHBeQccXmR83VqwjOFqcH
+
+uri: https://hackathon-deployment.es.us-east1.gcp.elastic-cloud.com
+
+Optimised Keyword search using Elastic
+
+PreProcessing step:
+- NTLK Gensim library
+- Emoji Library
+
+To filter the text initially to remove unwanted characters that may intrude the understanding of the models.
 
 - Code? Languages etc
 
@@ -151,22 +199,29 @@ Tools
 
 ## Data Science models
 
+### PreProcessing 
+
+Using RAKE and other libraries (referenced in Tooling) we will remove unwanted characters from the text and keep only keywords.
+
 ### Ground truth Elastic Index
 
-Needs input from David
+We index the 407 Guardian and New york times artcles inside elstic index, to be used for searches throughout the project.
 
 ### Social media filtering based on coherence 
 
-Needs input from David
+We complete a search on the elastic index based on Keywords to filter the revelant content.
 
 ### Semantic similarity Evidence Retrieval 
 
-Needs input from David
+After the intially filtering, we use a machine learning model (SBERT) to find the Ground truth claims closest to the tweet/reddit content.
 
 ### Entailment
 
-Needs input from David
+Using another machine leardning model (XLNET LARGE) to determine whether the closest ground truth claims to support or contradict the social media claim and attribute a score.
 
 ### Liklihood score
 
-Needs input from David
+the likelihood score is correlated to how many ground truth articles that contradictg the claim.
+
+i.e.
+Amount of contradict / total amount
