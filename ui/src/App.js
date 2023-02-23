@@ -9,34 +9,44 @@ import { EmptyScreen } from './components/EmptyScreen';
 import { FileUpload } from './components/FileUpload';
 import { SingularInput } from './components/SingularInput';
 import './variables.scss';
+import { useAnalystOutcome } from './AnalystOutcomeContext';
+import { AnalystOutcomeModal } from './components/AnalystOutcomeModal';
 
 export const App = () => {
     const [dataset, setDataset] = useState(false);
     const [textInput, setTextInput] = useState('');
     const [fileInput, setFileInput] = useState([]);
+    const { approved, dismissed } = useAnalystOutcome();
     return <div className="p-4">
         <h1 className="text-center mb-4">NODDY: Networked Disinformation detection system</h1>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center align-items-end">
             <Col xs={12} lg={6} xl={4}>
-                <SingularInput onChange={setTextInput} />
+                <SingularInput onChange={(text) => { setTextInput(text); setFileInput([]);}} />
             </Col>
             <Col xs={12} lg="auto">
-                <FileUpload onChange={(data) => setFileInput(data.map((item) => {
-                    const text = item.headlines || (item.title === 'Comment' ? item.body : item.title) || item.content || '';
-                    return {
-                        date: new Date(item.date || item.published || item.timestamp),
-                        content: text,
-                        claim: text,
-                        percentage: Math.floor(Math.random() * 100) + 1,
-                        ...(item.likeCount !== undefined ? {
-                            engagement: parseInt(item.likeCount) + parseInt(item.replyCount || 0) + parseInt(item.retweetCount || 0)
-                        } : {})
-                    }
-                }).sort((a, b) => b.percentage - a.percentage))} />
+                <FileUpload onChange={(data) => {
+                    setTextInput('');
+                    setFileInput(data.map((item) => {
+                        const text = item.headlines || (item.title === 'Comment' ? item.body : item.title) || item.content || '';
+                        return {
+                            id: item.id,
+                            date: new Date(item.date || item.published || item.timestamp),
+                            content: text,
+                            claim: text,
+                            percentage: Math.floor(Math.random() * 100) + 1,
+                            ...(item.likeCount !== undefined ? {
+                                engagement: parseInt(item.likeCount) + parseInt(item.replyCount || 0) + parseInt(item.retweetCount || 0)
+                            } : {})
+                        }
+                    }).sort((a, b) => b.percentage - a.percentage));
+                }} />
             </Col>
+            {(approved.length || dismissed.length) ? <Col xs="auto">
+                <AnalystOutcomeModal />
+            </Col> : null}
         </Row>
         <hr className="my-4" />
-        {textInput && <AnalyseText text={textInput} handleDismiss={() => setTextInput('')} />}
+        {textInput && <AnalyseText text={textInput} />}
         {fileInput.length !== 0 && <AnalyseData data={fileInput} />}
         {(!textInput && !fileInput.length) && <EmptyScreen />}
         <Button onClick={() => setDataset(!dataset)}>{dataset ? 'Hide' : 'Show'} dataset</Button>

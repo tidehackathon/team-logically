@@ -2,7 +2,7 @@ import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { ApproveDismiss } from '../ApproveDismiss';
 
-export const AnalyseText = ({ handleDismiss }) => {
+export const AnalyseText = ({ text }) => {
     return <div>
         <p>
             Analysed content counter: <strong>1</strong>
@@ -14,7 +14,7 @@ export const AnalyseText = ({ handleDismiss }) => {
             highlightClassName="p-0"
         />
         <div className="mt-2">
-            <ApproveDismiss handleDismiss={handleDismiss} />
+            <ApproveDismiss data={{ id: text, claim: text, content: text, percentage: 100 }} />
         </div>
         <hr className="my-4" />
     </div>

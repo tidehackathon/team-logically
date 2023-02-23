@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Label } from 'reactstrap';
+import { Button, InputGroup, InputGroupText, Label } from 'reactstrap';
 import { useCSVReader } from 'react-papaparse';
 
 export const FileUpload = ({ onChange }) => {
@@ -22,15 +22,18 @@ export const FileUpload = ({ onChange }) => {
                 ProgressBar
             }) => (
                 <>
-                    <div className="d-flex">
-                        <Button {...getRootProps()} color="primary" className="me-2">
+                    <InputGroup>
+                        <Button {...getRootProps()} color="primary">
                             File upload
                         </Button>
-                        {acceptedFile && <div className="border px-1 me-2 d-flex align-items-center">
-                            <p className="m-0">{acceptedFile.name}</p>
-                        </div>}
-                        <Button color="primary" disabled={!data.length} onClick={() => onChange(data)}>Analyse</Button>
-                    </div>
+                        {acceptedFile && <InputGroupText>{acceptedFile.name}</InputGroupText>}
+                        <Button color="primary"
+                            disabled={!data.length}
+                            onClick={() => onChange(data.map((item, i) => ({ ...item, id: acceptedFile.name + i })))}
+                        >
+                            Analyse
+                        </Button>
+                    </InputGroup>
                     <ProgressBar className="bg-danger position-absolute" style={{ bottom: -16 }} />
                 </>
             )}
