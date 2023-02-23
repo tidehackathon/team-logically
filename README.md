@@ -215,9 +215,13 @@ We complete a search on the elastic index based on Keywords to filter the revela
 
 After the intially filtering, we use a machine learning model (SBERT) to find the Ground truth claims closest to the tweet/reddit content.
 
+Chosen because they are pre trained on a large amount of textual data, which has shows a formidable ability of undersrtanding semantic structure and meaning of sentences
+
 ### Entailment
 
 Using another machine leardning model (XLNET LARGE) to determine whether the closest ground truth claims to support or contradict the social media claim and attribute a score.
+
+Chosen because they are pre trained on a large amount of textual data, which has shows a formidable ability of undersrtanding semantic structure and meaning of sentences
 
 ### Liklihood score
 
