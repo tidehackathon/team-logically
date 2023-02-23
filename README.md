@@ -47,6 +47,10 @@ Using
 
 ## Iteration 3 - 23/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-3-23-02-23.gif)
+
+## Iteration 4 - 23/02/2023
+![](https://github.com/tidehackathon/team-logically/blob/main/iteration-4-23-02-23.gif)
+
 # Architecture
 ## Architecture V1 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
