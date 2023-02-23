@@ -64,7 +64,9 @@ What has enabled us to provide such a robust solution is our use of a 'topic agn
 ![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
 
 ## Architecture V2 - 23/02/2023
+### Data science architecture 
 ![](https://github.com/tidehackathon/team-logically/blob/main/ds-architecture.jpg)
+### Front end Architecture
 ![](https://github.com/tidehackathon/team-logically/blob/main/front-end-architecture.jpg)
 
 ## Installation
