@@ -1,3 +1,7 @@
 /ui/node_modules
 yarn-debug.log*
 yarn-error.log*
+
+ai/outputs
+ai/inputs
+ai/__pycache__

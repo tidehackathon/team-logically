@@ -222,7 +222,7 @@ def remove_rt_char(tw_text):
 def generate_preprocess_dataset(dataset_path, output_path):
     rows = []
     lengths = []
-    with open(dataset_path, 'r') as file:
+    with open(dataset_path, 'r', encoding="utf8") as file:
     
         csvreader = csv.reader(file) 
         header = next(csvreader)
