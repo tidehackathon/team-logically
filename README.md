@@ -43,20 +43,12 @@ Using
 ​
 ## Iteration 2 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/iteration-2-22-02-23.gif)
+
+## Iteration 3 - 23/02/2023
+![](https://github.com/tidehackathon/team-logically/blob/main/iteration-3-23-02-23.gif)
 # Architecture
 ## Architecture V1 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
-## Installation
-​
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-​
-### Available Scripts
-#### `npm i` or `yarn`
-Downloads and installs dependencies
-​
-#### `npm start` or `yarn start`
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ​
 ## Roadmap
 ​
@@ -100,13 +92,13 @@ Takes two numbers and returns the sum.
 Clone the project
 ​
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/tidehackathon/team-logically.git
 ```
 ​
 Go to the project directory
 ​
 ```bash
-  cd my-project
+  cd team-logically/ui
 ```
 ​
 Install dependencies
