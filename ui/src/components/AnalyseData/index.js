@@ -31,9 +31,9 @@ export const AnalyseData = ({ data }) => {
             </tbody>
         </Table>
 
-        <div className="overflow-auto mt-2" style={{ maxHeight: 450 }}>
-            <Table className="border">
-                <thead className="sticky-top bg-white border-top">
+        <div className="overflow-auto mt-2 border" style={{ maxHeight: 450 }}>
+            <Table>
+                <thead className="sticky-top bg-white" style={{ top: -1 }}>
                     <tr>
                         <td>Content</td>
                         <td>Claim</td>

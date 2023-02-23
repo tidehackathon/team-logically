@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Col, Row } from 'reactstrap';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AnalyseData } from './components/AnalyseData';
 import { AnalyseText } from './components/AnalyseText';
 import { DateHistogram } from './components/DateHistogram';
@@ -35,5 +37,6 @@ export const App = () => {
         {(!textInput && !fileInput.length) && <EmptyScreen />}
         <Button onClick={() => setDataset(!dataset)}>{dataset ? 'Hide' : 'Show'} dataset</Button>
         {dataset && <DateHistogram />}
+        <ToastContainer theme="colored" autoClose={2000} />
     </div>
 };
