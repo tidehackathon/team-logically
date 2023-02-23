@@ -25,14 +25,18 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 What tools did we use? 
-open source?
-- Highcharts (UI visualizations)
+- open source?
+bootstrap and reactstrap - for styling components
+highcharts - for graphs
+react-wordcloud
+react-toastify
+keyword-extractor - a quick module that extracts keywords
 
-Non-proprietary 
-- 
+- Non-proprietary 
 
-Code? Languages etc
-- ReactJS (UI)
+
+- Code? Languages etc
+ReactJS (UI)
 
 Tools?
 -
