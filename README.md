@@ -76,10 +76,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Roadmap
 
+### Front end
 - Additional browser support
-
+- User management
+- sign up / Log in
+- link to fact check claims
 - Add more integrations
+- Richer graphics
 
+
+### Data Science
 - Increase the dataset
 - Adding more negative labels
 - Include active learning approach - 'expert in the loop' to teach the mnodel
@@ -89,6 +95,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - Make it multi modal
 - Multi lingual analysis
 - Integrate more fact checking models
+- Hate detection
+- Entity extraction and analysis
 
 ## API Reference
 
