@@ -61,7 +61,7 @@ export const KeywordWordcloud = ({ data }) => {
             <ModalHeader toggle={() => setModalWord({})}>
                 {modalWord.text || ''}
             </ModalHeader>
-            {modalWord.text && <ClaimsTable data={modalWord.data.map(item => ({
+            {modalWord.text && <ClaimsTable data={modalWord.data.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).map(item => ({
                 ...item,
                 content: <Highlighter searchWords={[modalWord.text]}
                     textToHighlight={item.content}
