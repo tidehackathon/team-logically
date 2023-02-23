@@ -92,7 +92,7 @@ async def solution(data:dict):
 
     print(result)
 
-    return {"output":""}
+    return result
 
 if __name__ == '__main__':
     import uvicorn
