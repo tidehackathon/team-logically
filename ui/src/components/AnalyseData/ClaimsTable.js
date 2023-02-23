@@ -24,7 +24,9 @@ export const ClaimsTable = ({ data, keyword, outcome }) => {
                     return (
                         <tr key={index}>
                             <td className={`dont-break-out ${isModal ? 'ps-4' : ''}`}>{item.content}</td>
-                            {!isModal && <td className="dont-break-out">{item.claim}</td>}
+                            {!isModal && <td className="dont-break-out">
+                                {item.claims.map(claim => <p key={claim}>{claim}</p>)}
+                            </td>}
                             <td>
                                 <div className="d-flex">
                                     <p className="mb-0 me-2"><strong>{item.percentage}%</strong></p>

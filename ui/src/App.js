@@ -26,19 +26,20 @@ export const App = () => {
             <Col xs={12} lg="auto">
                 <FileUpload onChange={(data) => {
                     setTextInput('');
-                    setFileInput(data.map((item) => {
-                        const text = item.headlines || (item.title === 'Comment' ? item.body : item.title) || item.content || '';
+                    setFileInput(data.map((item, i) => {
+                        const text = item.headlines || (item.title === 'Comment' ? item.body : item.title) || item.content;
+                        if (!text) return null;
                         return {
                             id: item.id,
                             date: new Date(item.date || item.published || item.timestamp),
                             content: text,
-                            claim: text,
+                            claims: item.claims ? JSON.parse(item.claims) : [text],
                             percentage: Math.floor(Math.random() * 100) + 1,
                             ...(item.likeCount !== undefined ? {
                                 engagement: parseInt(item.likeCount) + parseInt(item.replyCount || 0) + parseInt(item.retweetCount || 0)
                             } : {})
                         }
-                    }).sort((a, b) => b.percentage - a.percentage));
+                    }).filter(a => a).sort((a, b) => b.percentage - a.percentage));
                 }} />
             </Col>
             {(approved.length || dismissed.length) ? <Col xs="auto">
