@@ -2,15 +2,19 @@ from elasticsearch import Elasticsearch
 import csv
 import time
 from typing import List, Dict
-
+import pandas as pd 
 
 ES_URI = "https://hackathon-deployment.es.us-east1.gcp.elastic-cloud.com:9243"
 ES_USER = "elastic"
-ES_PASSWORD = "xjzoHBeQccXmR83VqwjOFqcH"
+ES_PASSWORD = "xjzoHBeQccXmR83VqwjOFqcH"# "xjzoHBeQccXmR83VqwjOFqcH"
 ES_TIMEOUT = 600
 
 
-def __main__():
+def get_tweets_with_articles(swu_extractions, output_path):
+    """
+        @swu_extracions : panda dataframe already loaded
+
+    """
     # create an Elasticsearch client instance
     es = Elasticsearch(
         [ES_URI],
@@ -19,7 +23,8 @@ def __main__():
     )
 
     # read csv file
-    with open("swu_extractions.csv", "r") as f:
+    #with  open("outputs/StandWithUkraine1_extractions.csv", "r") as f: 
+    with open(swu_extractions, "r") as f:
         reader = csv.DictReader(f)
         swu_extracions = list(reader)
 
@@ -121,12 +126,15 @@ def __main__():
         tweet["articles"] = get_articles_ids(tweet["keywords"])
         all_tweets.append(tweet)
 
-    with open("tweets_with_articles.csv", "w") as f:
+    with open(output_path, "w") as f:
         writer = csv.DictWriter(f, fieldnames=["id", "keywords", "articles"])
         writer.writeheader()
         writer.writerows(all_tweets)
     print(f"Processed all tweets in {time.time() - time_start} seconds")
-
+    return pd.read_csv(output_path)
 
 if __name__ == "__main__":
-    __main__()
+    #__main__()
+    #swu_extracions = pd.read_csv("outputs/StandWithUkraine1_processed.csv")
+    #print(swu_extracions)
+    get_tweets_with_articles("swu_extractions.csv", output_path="outputs/tweets_with_articles23.csv")
