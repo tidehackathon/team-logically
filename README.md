@@ -1,7 +1,6 @@
 
 # Project Title
 
-
 ## Name of the solution: 
 
 NODDY Networked Disinformation detection system
@@ -118,7 +117,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## API Reference
 
-_ needs input _
+python app.py
+
+python request_example
 
 #### Get all items
 
