@@ -62,6 +62,11 @@ What has enabled us to provide such a robust solution is our use of a 'topic agn
 # Architecture
 ## Architecture V1 - 22/02/2023
 ![](https://github.com/tidehackathon/team-logically/blob/main/architecture-v1.jpg)
+
+## Architecture V2 - 23/02/2023
+![](https://github.com/tidehackathon/team-logically/blob/main/ds-architecture.jpg)
+![](https://github.com/tidehackathon/team-logically/blob/main/front-end-architecture.jpg)
+
 ## Installation
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

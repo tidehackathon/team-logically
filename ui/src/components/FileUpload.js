@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, InputGroup, InputGroupText, Label } from 'reactstrap';
+import { Button, InputGroup, InputGroupText } from 'reactstrap';
 import { useCSVReader } from 'react-papaparse';
 
 export const FileUpload = ({ onChange }) => {
@@ -7,7 +7,6 @@ export const FileUpload = ({ onChange }) => {
     const [data, setData] = useState([]);
 
     return <div className="position-relative">
-        <Label>File upload</Label>
         <CSVReader onUploadAccepted={(results) => setData(results.data)}
             config={{
                 header: true,
