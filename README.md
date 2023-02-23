@@ -71,15 +71,26 @@ What has enabled us to provide such a robust solution is our use of a 'topic agn
 
 ## Installation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-### Available Scripts
+### UI
+#### `cd ui`
 #### `npm i` or `yarn`
 Downloads and installs dependencies
 
 #### `npm start` or `yarn start`
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### Backend
+#### `cd ai`
+#### `conda create -n hackathon python=3.8`
+
+#### `conda activate hackathon`
+
+#### `pip install -r requirements.txt`
+
+#### `pip install elasticsearch==7.17.9 elasticsearch-dsl==7.4.0`
+
+#### `python app.py`
 
 ## Roadmap
 
@@ -132,33 +143,6 @@ _ needs input _
 #### add(num1, num2)
 
 Takes two numbers and returns the sum.
-
-
-## Run Locally
-
-Clone the project
-
-```bash
-  git clone https://link-to-project
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start
-```
 
 
 # Tooling 
