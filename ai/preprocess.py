@@ -22,6 +22,9 @@ from collections import Counter
 import csv
 import codecs
 from tqdm import tqdm 
+from rake_nltk import Rake
+import pickle
+import string
 
 try:
     from emoji import demojize, get_emoji_regexp
@@ -33,7 +36,7 @@ except ImportError as error:
 nltk_tweet_tokenizer = TweetTokenizer(strip_handles=False, reduce_len=True)
 punctuation_filter = lambda t: filter(lambda a: a not in string.punctuation, t)
 stop_words_filter = lambda t: filter(lambda a: a not in _stop_words, t)
-
+r = Rake()
 def preprocessing(input_text):
     """normalise text and extract text from double quotes
     claims within double quotes are commonly seen in politifact claims
@@ -101,9 +104,9 @@ def normalizeToken(token, normalise_mention=True, remove_url=False):
     elif lowercased_token.startswith("http") or lowercased_token.startswith("www"):
         return "HTTPURL" if remove_url is False else ""
     else:
-        if token == "’":
+        if token == "â€™":
             return "'"
-        elif token == "…":
+        elif token == "â€¦":
             return "..."
         else:
             return token
@@ -145,7 +148,7 @@ def normalizeTweet(tweet, max_token_size: int = 60, lowercase=True, remove_emoji
     else:
         tweet = emoji2text(tweet)
 
-    tokens = nltk_tweet_tokenizer.tokenize(tweet.replace("’", "'").replace("…", "..."))
+    tokens = nltk_tweet_tokenizer.tokenize(tweet.replace("â€™", "'").replace("â€¦", "..."))
 
     normTweet = " ".join(
         [normalizeToken(token, normalise_mention=normalise_mention, remove_url=remove_url) for token in tokens])
@@ -216,7 +219,7 @@ def remove_rt_char(tw_text):
         txt_tokens.pop(0)
     return " ".join(txt_tokens)
  
-def generate_preprocess_dataset(dataset_path)
+def generate_preprocess_dataset(dataset_path, output_path):
     rows = []
     lengths = []
     with open(dataset_path, 'r') as file:
@@ -231,7 +234,21 @@ def generate_preprocess_dataset(dataset_path)
         except:
             pass
     new_df = pd.DataFrame(rows, columns=header)
+    new_df.iloc[:100].to_csv("dummy.csv", index=False)
     new_df["content_process"] = new_df.content.apply(lambda x: normalizeTweet(preprocessing(x), max_token_size=80, lowercase=True, remove_emoji=True, normalise_mention=True,
                    remove_url=True, remove_punc=True, remove_stopwords=False, return_str=True))
-    new_df = new_df["content_process"]
-    new_df.to_csv(dataset_path.replace(".csv", "processed.csv"))
+    #new_df = new_df["content_process"]
+    new_df["content_process"].to_csv( os.path.join(output_path,    os.path.basename(dataset_path.replace(".csv", "_processed.csv"))))
+
+
+    cols = ["ids", "keywords", "score"]
+    extractions = []
+
+    for i in tqdm(range(len(new_df))):
+        r.extract_keywords_from_text(new_df.content_process.values.tolist()[i])
+        for score, w in r.get_ranked_phrases_with_scores():
+            extractions.append([i, w, score])
+
+    extraction_df = pd.DataFrame(extractions, columns=cols)
+    extraction_df.to_csv(os.path.join(output_path,    os.path.basename(dataset_path.replace(".csv", "_extractions.csv"))), index=False)
+    return new_df, extraction_df
