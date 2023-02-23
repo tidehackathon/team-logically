@@ -40,7 +40,7 @@ export const KeywordWordcloud = ({ data }) => {
         fontStyle: 'normal',
         fontWeight: '800',
         rotations: 0,
-        padding: 0,
+        padding: 1,
         rotationAngles: [0, 90],
         scale: 'linear',
         spiral: 'rectangular',
