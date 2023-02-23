@@ -36,7 +36,7 @@ export const KeywordWordcloud = ({ data }) => {
     const options = {
         enableTooltip: false,
         fontFamily: 'nunito',
-        fontSizes: [25, 50],
+        fontSizes: [12, 50],
         fontStyle: 'normal',
         fontWeight: '800',
         rotations: 0,
