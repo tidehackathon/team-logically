@@ -11,17 +11,19 @@ import { SingularInput } from './components/SingularInput';
 import './variables.scss';
 import { useAnalystOutcome } from './AnalystOutcomeContext';
 import { AnalystOutcomeModal } from './components/AnalystOutcomeModal';
+import { useAPI } from './components/AnalyseText/useAPI';
 
 export const App = () => {
     const [dataset, setDataset] = useState(false);
     const [textInput, setTextInput] = useState('');
     const [fileInput, setFileInput] = useState([]);
     const { approved, dismissed } = useAnalystOutcome();
+    const { data, loading, callAPI } = useAPI();
     return <div className="p-4">
         <h1 className="text-center mb-4">NODDY: Networked Disinformation detection system</h1>
         <Row className="justify-content-center align-items-end">
             <Col xs={12} lg={6} xl={4}>
-                <SingularInput onChange={(text) => { setTextInput(text); setFileInput([]);}} />
+                <SingularInput onChange={(text) => { setFileInput([]); setTextInput(text); callAPI([{ content: text }]) }} />
             </Col>
             <Col xs={12} lg="auto">
                 <FileUpload onChange={(data) => {
@@ -47,7 +49,7 @@ export const App = () => {
             </Col> : null}
         </Row>
         <hr className="my-4" />
-        {textInput && <AnalyseText text={textInput} />}
+        {textInput && <AnalyseText text={textInput} data={data} loading={loading} />}
         {fileInput.length !== 0 && <AnalyseData data={fileInput} />}
         {(!textInput && !fileInput.length) && <EmptyScreen />}
         <Button onClick={() => setDataset(!dataset)}>{dataset ? 'Hide' : 'Show'} dataset</Button>

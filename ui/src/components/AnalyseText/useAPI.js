@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 
-export const useAPI = (text) => {
+export const useAPI = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    useEffect(() => {
-        axios.post('http://localhost:6004/get_claims', { content: [{ content: text }] }).then(res => {
+    const callAPI = (content) => {
+        axios.post('http://localhost:6004/get_claims', { content }).then(res => {
             const keys = Object.keys(res.data.claim);
 
             setData(keys.map(key => ({
@@ -19,9 +19,10 @@ export const useAPI = (text) => {
             console.error(err);
             setLoading(false);
         })
-    }, [text])
+    }
     return {
         data, 
-        loading
+        loading,
+        callAPI
     }
 }

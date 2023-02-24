@@ -3,10 +3,8 @@ import Highlighter from 'react-highlight-words';
 import { Spinner } from 'reactstrap';
 import { ClaimsTable } from '../AnalyseData/ClaimsTable';
 import { ApproveDismiss } from '../ApproveDismiss';
-import { useAPI } from './useAPI';
 
-export const AnalyseText = ({ text }) => {
-    const { data, loading } = useAPI(text);
+export const AnalyseText = ({ text, data, loading }) => {
     if (loading) {
         return <div className="p-5 d-flex align-items-center justify-content-center">
             <Spinner color="primary" />
